@@ -6,7 +6,7 @@ $LOAD_PATH.unshift "/home/imura/work"
 require "bowling"
 
 describe "ボウリングのスコア計算" do
- 
+  #変更を加えてみた
  #インスタンスの生成を共通化
  before(:all) do
     @game =Bowling.new
