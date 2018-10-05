@@ -7,6 +7,7 @@ require "bowling"
 
 describe "ボウリングのスコア計算" do
   #変更を加えてみた
+    #さらに変更を加えてみた
  #インスタンスの生成を共通化
  before(:all) do
     @game =Bowling.new
@@ -38,10 +39,3 @@ count.times do
  @game.add_score(pins)
 end
 end
-
-
-
-
-
-
-
