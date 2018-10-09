@@ -88,7 +88,81 @@ end
         end
       end
 
+      context "ストライクを取った場合" do
+          it "ストライクボーナスが加算されること" do
+             #第一フレームでストライク
+             @game.add_score(10)
+             #第二レームので5点、4点
+             @game.add_score(5)
+             @game.add_score(4)
+             #以降はすべてガター
+             add_many_scores(16,0)
+             #合計を計算
+             @game.calc_score
+             #期待する合計　※()内はボーナス点
+             #１０+５+（５）+4+(4)=28
+             expect(@game.total_score).to eq 28
+          end
+        end
 
+        context "ダブルを取った場合" do
+            it "それぞれのストライクボーナスが加算されること" do
+               #第一フレームでストライク
+               @game.add_score(10)
+               #第二フレームでストライク
+               @game.add_score(10)
+               #第三レームので5点、4点
+               @game.add_score(5)
+               @game.add_score(4)
+               #以降はすべてガター
+               add_many_scores(14,0)
+               #合計を計算
+               @game.calc_score
+               #期待する合計　※()内はボーナス点
+               #１０+１０＋（１０）＋５+（５＋５）+4＋（４）=53
+               expect(@game.total_score).to eq 53
+            end
+          end
+
+          context "ターキーを取った場合" do
+              it "それぞれのストライクボーナスが加算されること" do
+                 #第一フレームでストライク
+                 @game.add_score(10)
+                 #第二フレームでストライク
+                 @game.add_score(10)
+                 #第三フレームでストライク
+                 @game.add_score(10)
+                 #第四レームので5点、4点
+                 @game.add_score(5)
+                 @game.add_score(4)
+                 #以降はすべてガター
+                 add_many_scores(12,0)
+                 #合計を計算
+                 @game.calc_score
+                 #期待する合計　※()内はボーナス点
+                 #１０+１０＋（１０）＋10+（10＋10）+5＋（5＋５）+4＋（４）=83
+                 expect(@game.total_score).to eq 83
+              end
+            end
+
+            context "最終フレームでストライクを取った場合" do
+                it "ストライクボーナスが加算されないこと" do
+                   #第一フレームでストライク
+                   @game.add_score(10)
+                   #第二レームので5点、4点
+                   @game.add_score(5)
+                   @game.add_score(4)
+                   #3〜9フレームはすべてガター
+                   add_many_scores(14,0)
+                   #最終フレームでストライク
+                   @game.add_score(10)
+                   #合計を計算
+                   @game.calc_score
+                   #期待する合計　※()内はボーナス点
+                   #１０+5＋（5）+4＋（４）＋１０=38
+                   expect(@game.total_score).to eq 38
+                end
+              end
 end
 end
 
