@@ -15,7 +15,6 @@ end
 
    describe "全体の合計" do
 
-
       context "すべての投球で1ピンずつ倒した場合" do
   	     it "20になること" do
             add_many_scores(20, 1)
@@ -163,6 +162,40 @@ end
                    expect(@game.total_score).to eq 38
                 end
               end
+
+end
+
+describe "フレーム毎の合計" do
+    context "すべての投球で1ピンずつ倒した場合" do
+        it "1フレーム目の合計が2になること" do
+            add_many_scores(20, 1)
+            #合計を計算
+            @game.calc_score
+            expect(@game.frame_score(1)).to eq 2
+        end
+    end
+
+    context "スペアを取った場合" do
+        it "スペアボーナスが加算されること" do
+            @game.add_score(3)
+            @game.add_score(7)
+            @game.add_score(4)
+            add_many_scores(17, 0)
+            @game.calc_score
+            expect(@game.frame_score(1)).to eq 14
+        end
+    end
+
+    context "ストライクを取った場合" do
+        it "ストライクボーナスが加算されること" do
+            @game.add_score(10)
+            @game.add_score(5)
+            @game.add_score(4)
+            add_many_scores(16, 0)
+            @game.calc_score
+            expect(@game.frame_score(1)).to eq 19
+        end
+    end
 end
 end
 
